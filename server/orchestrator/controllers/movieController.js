@@ -8,7 +8,7 @@ class MovieController {
     try {
       const moviesData = await redis.get('movies:data')
       if (moviesData) {
-        console.log('data dari redis')
+        console.log('data dari redis') 
         return res.status(200).json(JSON.parse(moviesData))
       } else {
         console.log('data belom di cache')
@@ -34,10 +34,8 @@ class MovieController {
       const movieById = await redis.get('movieById:dataById')
 
       if (movieById) {
-        console.log('data dari redis')
         return res.status(200).json(JSON.parse(movieById))
       } else {
-        console.log('data belom di cache')
         axios.get(`${url}/${id}`)
         .then(response => {
           redis.set('movieById:dataById', JSON.stringify(response.data))
