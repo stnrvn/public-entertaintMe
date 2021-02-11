@@ -1,4 +1,7 @@
 const router = require('express').Router()
 
-router.get('/entertaintme')
+const entertaintmeController = require('../controllers/entertaintmeController')
+
+router.get('/entertaintme', entertaintmeController.get)
+
 module.exports = router
