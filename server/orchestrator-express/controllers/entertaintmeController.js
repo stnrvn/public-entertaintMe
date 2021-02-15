@@ -7,7 +7,7 @@ const urlSeries = 'http://localhost:4002/series'
 class EntertaintmeController{
   static async get (req, res) {
     try {
-      const entertaintData = await redis.get('entertaintData:entertaintData')
+      const entertaintData = await redis.get('entertaintData:data')
       if (entertaintData) {
         console.log('data dari redis')
         return res.status(200).json(JSON.parse(entertaintData))

@@ -28,8 +28,6 @@ class MovieController {
 
   static async getById (req, res) {
     try {
-      await redis.del('movies:data')
-
       const id = req.params.id
       const movieById = await redis.get('movieById:dataById')
 
