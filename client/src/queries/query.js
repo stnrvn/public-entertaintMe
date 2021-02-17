@@ -61,9 +61,9 @@ export const GET_MOVIE_DETAIL = gql`
 }
 `
 
-export const ADD_MOVIE = gql`
-  mutation createMovie($newMovie: MovieInput){
-    createMovie(data: $newMovie){
+export const GET_SERIES_DETAIL = gql`
+  query getSeriesById($seriesId: ID){
+    seriesById(_id: $seriesId){
       title
       overview
       poster_path
@@ -73,9 +73,9 @@ export const ADD_MOVIE = gql`
   }
 `
 
-export const ADD_SERIES = gql`
-  mutation createSeries($newSeries: MovieInput){
-    createSeries(data: $newSeries){
+export const ADD_MOVIE = gql`
+  mutation createMovie($newMovie: MovieInput){
+    createMovie(data: $newMovie){
       title
       overview
       poster_path

@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client'
 import { Container, Row } from 'react-bootstrap'
 import CardList from '../components/CardList'
 import { GET_SERIES } from '../queries/query'
+import NavigatorBar from '../components/NavigatorBar'
 
 export default function Series () {
   const { data:series, loading, error } = useQuery(GET_SERIES)
@@ -12,6 +13,8 @@ export default function Series () {
   )
 
   return (
+    <>
+    <NavigatorBar />
     <Container fluid>
         <h1>{ Object.keys(series) }</h1>
       <Row>
@@ -22,5 +25,6 @@ export default function Series () {
         }
       </Row>
     </Container>
+    </>
   )
 }

@@ -21,7 +21,6 @@ function App() {
   return (
     <ApolloProvider client={ client }>
       <Router>
-        <Link to={`/favorites`} className="btn btn-link text-decoration-none text-muted mb-2 mt-2">Favorites page</Link>
         <Switch>
           <Route exact path='/'>
             <Home />
