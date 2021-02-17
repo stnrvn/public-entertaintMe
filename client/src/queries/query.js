@@ -113,3 +113,9 @@ export const DELETE_SERIES = gql`
     }
 }
 `
+
+export const GET_FAVORITES = gql`
+  query {
+    favorites @client
+  }
+`

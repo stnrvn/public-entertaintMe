@@ -1,7 +1,8 @@
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from 'react-router-dom'
 
 import {
@@ -9,7 +10,8 @@ import {
   Movies,
   Series,
   DetailMovies,
-  DetailSeries
+  DetailSeries,
+  Favorites
 } from './pages'
 
 import { ApolloProvider } from '@apollo/client'
@@ -19,6 +21,7 @@ function App() {
   return (
     <ApolloProvider client={ client }>
       <Router>
+        <Link to={`/favorites`} className="btn btn-link text-decoration-none text-muted mb-2 mt-2">Favorites page</Link>
         <Switch>
           <Route exact path='/'>
             <Home />
@@ -34,6 +37,9 @@ function App() {
           </Route>
           <Route path='/series/:id'>
             <DetailSeries />
+          </Route>
+          <Route exact path='/favorites'>
+            <Favorites />
           </Route>
         </Switch>
       </Router>
