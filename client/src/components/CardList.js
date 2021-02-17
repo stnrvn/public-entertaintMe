@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Container, Row, Col, Card, Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap'
-import { useQuery, gql, useMutation } from '@apollo/client'
+import { Col, Card, Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap'
+import { useQuery, useMutation } from '@apollo/client'
 import { Link } from 'react-router-dom'
 import { DELETE_MOVIE, GET_MOVIES, GET_MOVIE_DETAIL, GET_FAVORITES } from '../queries/query'
-import { ModalUpdate, modalUpdate } from './ModalUpdate'
+import { ModalUpdate } from './ModalUpdate'
 import favoriteMovie from '../cache/index'
 
 export default function CardList (props) {
@@ -11,8 +11,6 @@ export default function CardList (props) {
   const [show, setShow] = useState(false)
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false)
-  const {data:favorites} = useQuery(GET_FAVORITES)
-
   
   const { data:movies, loading, error} = useQuery(GET_MOVIE_DETAIL, {
     variables: {
@@ -37,12 +35,10 @@ export default function CardList (props) {
   )
 
   const onClickHandler = () => {
-    console.log('test onclick')
     favoriteMovie([...favoriteMovie(), data])
   }
 
   const deleteHandler = (id) => {
-    console.log(id)
     deleteMovie({
       variables: { 
         movieId: id
@@ -53,20 +49,17 @@ export default function CardList (props) {
   
   return (
     <Col lg="2" className="mt-3">
-      <h1>{ JSON.stringify(favorites) }</h1>
       <Card className="border-0">
-      <Card.Img variant="top" className="rounded" src={ data.poster_path } style={{ width: '100%', height: '20vh', objectFit: 'contain' }}/>
+      <Card.Img variant="top" className="rounded"  src={ data.poster_path } style={{ backgroundSize: 'cover', maxHeight: '30vh', objectFit: 'contain'}}/>
       <Card.Body className="pl-0 pr-0">
-      <Card.Title>{ data.title }</Card.Title>
-      <Card.Text>
-          { data.popularity }
+      <Card.Title><h6>{ data.title }</h6></Card.Title>
+      <Card.Text classname="inline-block">
+          <i class="bi bi-star-fill pb-5 k"></i>
+          <span>{ data.popularity }</span>
       </Card.Text>
-      <Button variant="primary" onClick={onClickHandler}>Favorite</Button>
-      <OverlayTrigger trigger="click" rootClose data-trigger="focus" placement="bottom" overlay={popover(data._id)}>
-        <Button
-          className="float-right"
-          variant="success"
-          >Click me to see</Button>
+      <button className="btn btn-link"onClick={onClickHandler}><i class="bi bi-heart"></i></button>
+      <OverlayTrigger trigger="click" rootClose data-trigger="focus" placement="top" overlay={popover(data._id)}>
+        <button className="btn btn-link float-right"><i class="bi bi-three-dots-vertical"></i></button>
       </OverlayTrigger>
       </Card.Body>
       </Card>

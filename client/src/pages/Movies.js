@@ -4,6 +4,7 @@ import { Container, Row, Button, Popover, OverlayTrigger } from 'react-bootstrap
 import CardList from '../components/CardList'
 import ModalCreate from '../components/ModalCreate'
 import { GET_MOVIES } from '../queries/query'
+import NavigatorBar from '../components/NavigatorBar'
 
 export default function Movies () {
   const { data:movies, loading, error } = useQuery(GET_MOVIES)
@@ -13,6 +14,8 @@ export default function Movies () {
   )
 
   return (
+    <>
+    <NavigatorBar />
     <Container fluid>
       <ModalCreate/>
       <Row>
@@ -23,5 +26,6 @@ export default function Movies () {
         }
       </Row>
     </Container>
+    </>
   )
 }
