@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import CardList from '../components/CardList'
-
-const GET_MOVIES = gql`
-  query getMovies{
-  movies{
-    _id
-    title
-    overview
-  }
-}
-`
+import ModalCreate from '../components/ModalCreate'
+import { GET_MOVIES } from '../queries/query'
 
 export default function Movies () {
-  const { data, loading, error } = useQuery(GET_MOVIES)
+  const { data:movies, loading, error } = useQuery(GET_MOVIES)
+
+  if (loading) return (
+    <h1>Loading..</h1>
+  )
 
   return (
     <Container fluid>
+      <ModalCreate/>
       <Row>
         {
-          data.movies.map(movie => {
-            return <CardList key={ movie.id } data={ movie } />
+          movies.movies.map(listMovie => {
+            return <CardList key={ listMovie._id } data={ listMovie } urlName={ Object.keys(movies) }/>
           })
         }
       </Row>

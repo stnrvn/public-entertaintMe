@@ -75,7 +75,7 @@ const resolvers = {
 
           redis.set('entertaintData:data', JSON.stringify(response))
 
-          return response
+          return response.entertaintMe
         }
       } catch (error) {
         return error
@@ -145,10 +145,10 @@ const resolvers = {
   Mutation: {
     createMovie: async (_, args) => {
       try {
+        const { data } = await axios.post(urlMovie, args.data)
+
         await redis.del('movies:data')
         await redis.del('entertaintData:data')
-        
-        const { data } = await axios.post(urlMovie, args.data)
 
         return data.ops[0]
       } catch (error) {
@@ -157,24 +157,27 @@ const resolvers = {
     },
     updateMovie:async (_, args) => {
       try {
-        await redis.del('movies:data')
         const id = args._id
+        const newData = args.data
         
-        const { data } = await axios.put(`${urlMovie}/${id}`, args.data)
+        console.log(id, 'from appjs')
+        const { data } = await axios.put(`${urlMovie}/${id}`, newData)
+        await redis.del('movies:data')
 
-        console.log(data, 'from update')
+        console.log(data[0])
+        return data[0]
       } catch (error) {
         console.log(error) 
       }
     },
     deleteMovie:async (_, args) => {
       try {
-        await redis.del('movies:data')
         const id = args._id
-        
-        await axios.delete(`${urlMovie}/${id}`)
+        console.log(id, 'id dari app')
+        const { data } = await axios.delete(`${urlMovie}/${id}`)
+        await redis.del('movies:data')
 
-        return `Berhasil!`
+        return data
       } catch (error) {
         console.log(error)
       }
@@ -187,7 +190,7 @@ const resolvers = {
         
         const { data } = await axios.post(urlSeries, args.data)
 
-        return data
+        return data.ops[0]
       } catch (error) {
         console.log(error)
       }

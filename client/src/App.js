@@ -6,7 +6,10 @@ import {
 
 import {
   Home,
-  Movies
+  Movies,
+  Series,
+  DetailMovies,
+  DetailSeries
 } from './pages'
 
 import { ApolloProvider } from '@apollo/client'
@@ -20,8 +23,17 @@ function App() {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route path='/movies'>
+          <Route exact path='/movies'>
             <Movies />
+          </Route>
+          <Route  path='/movies/:id'>
+            <DetailMovies />
+          </Route>
+          <Route exact path='/series'>
+            <Series />
+          </Route>
+          <Route path='/series/:id'>
+            <DetailSeries />
           </Route>
         </Switch>
       </Router>

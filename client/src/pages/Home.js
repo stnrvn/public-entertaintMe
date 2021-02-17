@@ -1,30 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useQuery, gql } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import CardList from '../components/CardList'
-
-const GET_ENTERTAINTME = gql`
-  query getEntertaintMe{
-  entertaintMe{
-    movies{
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-    series{
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-}
-`
+import { GET_ENTERTAINTME } from '../queries/query'
 
 export default function Home () {
   const { data, loading, error } = useQuery(GET_ENTERTAINTME)
@@ -39,7 +17,7 @@ export default function Home () {
       <Row>
         {
           data.entertaintMe.movies.map(movie => {
-            return <CardList key={ movie.id } data={ movie } />
+            return <CardList key={ movie._id } data={ movie } urlName={ Object.keys(data.entertaintMe )[1] } />
           })
         }
       </Row>
@@ -48,7 +26,7 @@ export default function Home () {
       <Row>
         {
           data.entertaintMe.series.map(series => {
-            return <CardList key={ series.id } data={ series } />
+            return <CardList key={ series._id } data={ series } urlName={ Object.keys(data.entertaintMe )[2] }/>
           })
         }
       </Row>

@@ -41,9 +41,11 @@ class MovieController {
   static async update (req, res) {
     try {
       const id = req.params.id
+      const updatedData = await Movie.getById(id)
+
       const movie = await Movie.update(id, req.body)
 
-      return res.status(201).json(movie)
+      return res.status(201).json(updatedData)
     } catch (error) {
       return res.status(500).json(error)
     }
@@ -53,16 +55,15 @@ class MovieController {
     try {
       const id = req.params.id
 
-      
+      const deletedData = await Movie.getById(id)
+  
       const movie = await Movie.destroy(id)
       
       if (!movie) return res.status(401).json({
         message: 'error not found!'
       })
 
-      return res.status(201).json({
-        message: 'Movie success to delete!'
-      })
+      return res.status(201).json(deletedData[0])
     } catch (error) {
       return res.status(401).json(error)
     }
