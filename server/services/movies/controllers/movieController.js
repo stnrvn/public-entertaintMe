@@ -6,7 +6,7 @@ class MovieController {
       const movies = await Movie.get()
 
       if (!movies) return res.status(400).json({
-          message: 'not found!'
+          message: 'not found'
       })
 
       console.log(movies, 'get')
